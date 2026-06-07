@@ -8,9 +8,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Note Stars">
 <title>Note Stars</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
   /* ---- base palette (FOXY default) ---- */
   :root{
@@ -58,41 +55,24 @@
     --accentA:#8bbf6e; --accentB:#6fa8b0; --switchOn:#8bbf6e; --panelGlow:rgba(60,90,50,.4);
   }
   body[data-theme="gorilla"]{
-    --font:"Marker Felt","Chalkboard SE","Comic Sans MS",-apple-system,system-ui,sans-serif;
-    --ink:#3a2414; --paper:#fff6e0;
-    --bg:radial-gradient(95% 60% at 50% -8%, #ffdf5e 0%, transparent 55%),
-        radial-gradient(120% 80% at 8% 25%, #5fc24a 0%, transparent 50%),
-        radial-gradient(120% 85% at 95% 22%, #2f9b3e 0%, transparent 52%),
-        linear-gradient(180deg, #2e913e 0%, #145a27 100%);
-    --brand1:#e11f26; --brand2:#ffc400; --brand3:#8a4a23;
-    --bubbleBg:#fff; --bubbleInk:#3a2414; --pillBg:#fff;
-    --accentA:#e11f26; --accentB:#f7a400; --switchOn:#e11f26; --panelGlow:rgba(10,40,15,.55);
+    --font:-apple-system,"SF Pro Rounded","Segoe UI Variable","Segoe UI",system-ui,sans-serif;
+    --ink:#23262c; --paper:#ffffff;
+    --bg:radial-gradient(70% 52% at 10% 6%, rgba(0,179,230,.40) 0%, transparent 55%),
+        radial-gradient(70% 52% at 90% 6%, rgba(255,60,65,.40) 0%, transparent 55%),
+        radial-gradient(90% 70% at 50% 122%, rgba(0,195,137,.18) 0%, transparent 55%),
+        linear-gradient(180deg, #33373e 0%, #1c1f24 100%);
+    --brand1:#ff3c41; --brand2:#ffffff; --brand3:#00b3e6;
+    --bubbleBg:#ffffff; --bubbleInk:#23262c; --pillBg:#ffffff;
+    --accentA:#ff3c41; --accentB:#00b3e6; --switchOn:#00c389; --panelGlow:rgba(0,0,0,.6);
   }
-  /* ---- Donkey Kong flair (gorilla theme only) ---- */
-  body[data-theme="gorilla"] .brand{ font-family:"Press Start 2P",system-ui; font-size:clamp(12px,3vw,20px); letter-spacing:0; line-height:1.4;
-    -webkit-text-stroke:1px rgba(0,0,0,.25); }
-  body[data-theme="gorilla"] .panel h1{ font-family:"Press Start 2P",system-ui; font-size:clamp(18px,4.6vw,26px); line-height:1.35; }
-  body[data-theme="gorilla"] .bigbtn{ font-family:"Press Start 2P",system-ui; font-size:clamp(15px,3.6vw,19px); letter-spacing:0;
-    text-shadow:0 2px 0 rgba(0,0,0,.35); }
+  /* ---- Nintendo Switch 2 vibe (gorilla theme only) ---- */
+  body[data-theme="gorilla"] .brand{ letter-spacing:.5px; }
+  body[data-theme="gorilla"] .staffcard{ box-shadow:0 18px 44px rgba(0,0,0,.5), inset 0 0 0 3px rgba(255,255,255,.65); }
+  body[data-theme="gorilla"] .panel{ box-shadow:0 26px 70px rgba(0,0,0,.65), inset 0 0 0 2px rgba(255,255,255,.6); }
   body[data-theme="gorilla"] .pill,
-  body[data-theme="gorilla"] .gear{ box-shadow:0 5px 0 #8a4a23; }
-  body[data-theme="gorilla"] .staffcard{
-    background:
-      radial-gradient(circle at 13px 13px, #ffd34d 3.2px, transparent 4px),
-      radial-gradient(circle at calc(100% - 13px) 13px, #ffd34d 3.2px, transparent 4px),
-      radial-gradient(circle at 13px calc(100% - 13px), #ffd34d 3.2px, transparent 4px),
-      radial-gradient(circle at calc(100% - 13px) calc(100% - 13px), #ffd34d 3.2px, transparent 4px),
-      linear-gradient(180deg,#fff6e0 0%,#ffedc2 100%);
-    background-repeat:no-repeat;
-    box-shadow:0 16px 40px rgba(0,0,0,.4),
-      inset 0 0 0 5px #8a4a23, inset 0 0 0 9px #c98a4a, inset 0 0 0 12px #6e3a1c;
-  }
-  body[data-theme="gorilla"] .clefword{ color:#8a4a23; opacity:.7; }
-  body[data-theme="gorilla"] .pill{ font-family:"Press Start 2P",system-ui; font-size:clamp(11px,2.8vw,15px); }
-  body[data-theme="gorilla"] .bubble{ font-family:"Press Start 2P",system-ui; font-size:clamp(10px,2.6vw,14px); line-height:1.5; }
-  body[data-theme="gorilla"] .buddy{ filter:drop-shadow(3px 4px 0 rgba(0,0,0,.3)); shape-rendering:crispEdges; }
-  body[data-theme="gorilla"]::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:11;
-    background:repeating-linear-gradient(0deg, rgba(0,0,0,.07) 0 2px, rgba(0,0,0,0) 2px 4px); }
+  body[data-theme="gorilla"] .gear{ box-shadow:0 4px 14px rgba(0,0,0,.45); }
+  body[data-theme="gorilla"] .buddy{ filter:drop-shadow(0 10px 12px rgba(0,0,0,.5)); }
+  body[data-theme="gorilla"] .clefword{ color:#00b3e6; opacity:.85; }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0; height:100%; overflow:hidden;}
@@ -125,8 +105,8 @@
   .buddy.cheer{animation:cheer .6s ease;}
   @keyframes cheer{0%{transform:scale(1)}30%{transform:scale(1.18) rotate(-6deg)}60%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1)}}
   @keyframes gBeat{0%,100%{transform:translateY(0) scaleY(1)}18%{transform:translateY(4px) scaleY(.96)}33%{transform:translateY(-3px) scaleY(1)}48%{transform:translateY(4px) scaleY(.96)}63%{transform:translateY(-3px) scaleY(1)}80%{transform:translateY(-7px)}}
-  @keyframes gThumpL{0%,100%{transform:translate(0,0)}18%{transform:translate(28px,-16px)}33%{transform:translate(16px,-6px)}48%{transform:translate(28px,-16px)}63%{transform:translate(16px,-6px)}80%{transform:translate(22px,-11px)}}
-  @keyframes gThumpR{0%,100%{transform:translate(0,0)}18%{transform:translate(-28px,-16px)}33%{transform:translate(-16px,-6px)}48%{transform:translate(-28px,-16px)}63%{transform:translate(-16px,-6px)}80%{transform:translate(-22px,-11px)}}
+  @keyframes gThumpL{0%,100%{transform:translate(0,0)}18%{transform:translate(15px,-21px)}33%{transform:translate(7px,-9px)}48%{transform:translate(15px,-21px)}63%{transform:translate(7px,-9px)}80%{transform:translate(11px,-15px)}}
+  @keyframes gThumpR{0%,100%{transform:translate(0,0)}18%{transform:translate(-15px,-21px)}33%{transform:translate(-7px,-9px)}48%{transform:translate(-15px,-21px)}63%{transform:translate(-7px,-9px)}80%{transform:translate(-11px,-15px)}}
   @keyframes gorillaOops{0%,100%{transform:rotate(0) translateY(0)}18%{transform:rotate(-13deg) translateY(2px)}38%{transform:rotate(11deg) translateY(-4px)}58%{transform:rotate(-9deg) translateY(2px)}78%{transform:rotate(5deg) translateY(-2px)}}
   body[data-theme="gorilla"] .buddy.cheer{animation:gBeat .72s ease;}
   body[data-theme="gorilla"] .buddy.cheer .gfist-l{animation:gThumpL .72s ease;}
@@ -447,49 +427,32 @@ function mForest(mood){
     +'<circle cx="44" cy="84" r="5" fill="#e6b8b0" opacity=".5"/><circle cx="76" cy="84" r="5" fill="#e6b8b0" opacity=".5"/>'
     +eyes+'<circle cx="60" cy="82" r="2.5" fill="#6a6a55"/>'+mouth;
 }
-// 8-bit pixel-art gorilla: each char in a grid row maps to a colored square
-function pxArt(rows,size,ox,oy,P){
-  let s="";
-  for(let y=0;y<rows.length;y++){ const row=rows[y];
-    for(let x=0;x<row.length;x++){ const c=P[row[x]]; if(c) s+='<rect x="'+(ox+x*size)+'" y="'+(oy+y*size)+'" width="'+size+'" height="'+size+'" fill="'+c+'"/>'; }
-  }
-  return s;
-}
 function mGorilla(mood){
   const happy=mood==="happy",think=mood==="think";
-  const P={D:"#2c1f16",B:"#5e4733",F:"#d9b485",E:"#16100a",W:"#ffffff",R:"#e11f26",r:"#b3171c",N:"#2c1f16"};
-  const eyes = happy? ".DBFEWEFFEWEFBD."
-             : think? ".DBFFEFFFFFEFBD."
-             :        ".DBFFEFFFFEFFBD.";
-  const mouth= happy? ".DBFEEWWWWEEFBD."
-             : think? ".DBFFFFEEFFFFBD."
-             :        ".DBFFFEEEEFFFBD.";
-  const body=[
-    "....DDDDDDDD....",
-    "...DDBBBBBBDD...",
-    "..DDBBBBBBBBDD..",
-    "..DBBBBBBBBBBD..",
-    ".DDBBBBBBBBBBDD.",
-    ".DBBDDDDDDDDBBD.",
-    eyes,
-    ".DBFFFFFFFFFFBD.",
-    ".DBFFNFFFFNFFBD.",
-    mouth,
-    "..DBFFFFFFFFBD..",
-    ".DDBBBBBBBBBBDD.",
-    "DDBBBBRRRRBBBBDD",
-    "DBBBBBRRRRBBBBBD",
-    "DBBBBBRRRRBBBBBD",
-    "DBBBBBBRRBBBBBBD",
-    ".DBBBBBBBBBBBBD.",
-    "...DBBD.DBBD....",
-    "...DDD..DDD....."
-  ];
-  const arm=["DBBD","DBBD","DBBD","DBBD","DBBD","DBBD","DBBD","DDDD",".DD."];
-  return '<ellipse cx="60" cy="127" rx="40" ry="4" fill="rgba(0,0,0,.2)"/>'
-    +pxArt(body,6,12,6,P)
-    +'<g class="gfist-l">'+pxArt(arm,6,6,66,P)+'</g>'
-    +'<g class="gfist-r">'+pxArt(arm,6,90,66,P)+'</g>';
+  const eyes=happy?'<path d="M45 30 q6 -6 12 0" stroke="#241a12" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M63 30 q6 -6 12 0" stroke="#241a12" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    :think?'<circle cx="51" cy="32" r="4" fill="#241a12"/><circle cx="69" cy="30" r="3.5" fill="#241a12"/><path d="M62 24 q7 -4 13 -1" stroke="#241a12" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+    :'<circle cx="51" cy="31" r="4.6" fill="#241a12"/><circle cx="69" cy="31" r="4.6" fill="#241a12"/><circle cx="52.6" cy="29.4" r="1.4" fill="#fff"/><circle cx="70.6" cy="29.4" r="1.4" fill="#fff"/>';
+  const mouth=happy?'<path d="M48 48 Q60 60 72 48 Q60 54 48 48 Z" fill="#6a3326"/><path d="M52 49 Q60 53 68 49" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+    :think?'<path d="M52 50 q9 4 17 -2" stroke="#6a3326" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+    :'<path d="M51 49 Q60 54 69 49" stroke="#6a3326" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  const head='<ellipse cx="34" cy="28" rx="7" ry="9" fill="#6f5743" stroke="#33271b" stroke-width="2"/>'
+    +'<ellipse cx="86" cy="28" rx="7" ry="9" fill="#6f5743" stroke="#33271b" stroke-width="2"/>'
+    +'<ellipse cx="60" cy="30" rx="27" ry="25" fill="#6f5743" stroke="#33271b" stroke-width="2.5"/>'
+    +'<ellipse cx="60" cy="42" rx="20" ry="16" fill="#dcc3a6"/>'
+    +'<path d="M40 24 Q60 14 80 24 Q66 22 60 22 Q54 22 40 24 Z" fill="#4a3829"/>'
+    +eyes
+    +'<ellipse cx="55" cy="44" rx="2.6" ry="3.4" fill="#241a12"/><ellipse cx="65" cy="44" rx="2.6" ry="3.4" fill="#241a12"/>'
+    +mouth;
+  const torso='<path d="M30 72 Q26 56 46 54 L74 54 Q94 56 90 72 L86 106 Q84 116 70 116 L50 116 Q36 116 34 106 Z" fill="#6f5743" stroke="#33271b" stroke-width="2.5"/>'
+    +'<ellipse cx="60" cy="86" rx="21" ry="23" fill="#c9ad8c"/>';
+  const tie='<path d="M54 56 L60 52 L66 56 L60 62 Z" fill="#ff3c41" stroke="#cc262b" stroke-width="1.5"/>'
+    +'<path d="M56 62 L64 62 L68 98 L60 104 L52 98 Z" fill="#ff3c41" stroke="#cc262b" stroke-width="1.5"/>';
+  const feet='<ellipse cx="46" cy="120" rx="13" ry="8" fill="#4d3b2b" stroke="#33271b" stroke-width="2"/>'
+    +'<ellipse cx="74" cy="120" rx="13" ry="8" fill="#4d3b2b" stroke="#33271b" stroke-width="2"/>';
+  const armL='<g class="gfist-l"><path d="M34 64 Q16 72 18 94 Q20 108 34 105 Q41 101 38 86 Q40 72 46 66 Z" fill="#6f5743" stroke="#33271b" stroke-width="2.5"/><circle cx="26" cy="102" r="11" fill="#4d3b2b" stroke="#33271b" stroke-width="2"/></g>';
+  const armR='<g class="gfist-r"><path d="M86 64 Q104 72 102 94 Q100 108 86 105 Q79 101 82 86 Q80 72 74 66 Z" fill="#6f5743" stroke="#33271b" stroke-width="2.5"/><circle cx="94" cy="102" r="11" fill="#4d3b2b" stroke="#33271b" stroke-width="2"/></g>';
+  return '<ellipse cx="60" cy="126" rx="42" ry="5" fill="rgba(0,0,0,.28)"/>'
+    +feet+torso+tie+head+armL+armR;
 }
 
 const THEMES={
@@ -508,10 +471,10 @@ const THEMES={
     confetti:["#8bbf6e","#cfe3b5","#f6e7a8","#bfe0e8","#e8d3b0","#a7c98f"],
     praise:["Lovely~","The forest smiles","So gentle~","Wonderful~","Peaceful!","Sweet~"],
     nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]},
-  gorilla:{deco:"🦍🍌🦍", mascot:mGorilla, correct:"jungle",
-    confetti:["#e11f26","#ffc400","#f7a400","#3fae3f","#8a4a23","#fff3c4"],
-    praise:["BANANAS! 🍌","DK SMASH!","Top banana!","Kong strong!","BOOM!","Mighty!"],
-    nudge:["Try again, Kong!","So close!","Grab that banana!","One more swing!"]}
+  gorilla:{deco:"🎮🦍🎮", mascot:mGorilla, correct:"jungle",
+    confetti:["#ff3c41","#00b3e6","#ffffff","#ffd23c","#00c389","#7a5cff"],
+    praise:["Player 1 wins!","Nice combo!","Level up!","BANANAS! 🍌","New high score!","Mighty!"],
+    nudge:["Try again!","So close!","One more go!","Almost — retry!"]}
 };
 
 /* ---------- audio ---------- */
