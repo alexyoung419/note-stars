@@ -56,14 +56,14 @@
   }
   body[data-theme="gorilla"]{
     --font:-apple-system,"SF Pro Rounded","Segoe UI Variable","Segoe UI",system-ui,sans-serif;
-    --ink:#23262c; --paper:#ffffff;
-    --bg:radial-gradient(70% 52% at 10% 6%, rgba(0,179,230,.40) 0%, transparent 55%),
-        radial-gradient(70% 52% at 90% 6%, rgba(255,60,65,.40) 0%, transparent 55%),
-        radial-gradient(90% 70% at 50% 122%, rgba(0,195,137,.18) 0%, transparent 55%),
-        linear-gradient(180deg, #33373e 0%, #1c1f24 100%);
-    --brand1:#ff3c41; --brand2:#ffffff; --brand3:#00b3e6;
-    --bubbleBg:#ffffff; --bubbleInk:#23262c; --pillBg:#ffffff;
-    --accentA:#ff3c41; --accentB:#00b3e6; --switchOn:#00c389; --panelGlow:rgba(0,0,0,.6);
+    --ink:#3c3c3c; --paper:#ffffff;
+    --bg:radial-gradient(70% 52% at 10% 6%, rgba(28,176,246,.22) 0%, transparent 55%),
+        radial-gradient(70% 52% at 90% 6%, rgba(88,204,2,.22) 0%, transparent 55%),
+        radial-gradient(90% 70% at 50% 122%, rgba(255,200,0,.18) 0%, transparent 55%),
+        linear-gradient(180deg, #f7fef0 0%, #ddf4ff 100%);
+    --brand1:#58cc02; --brand2:#1cb0f6; --brand3:#ffc800;
+    --bubbleBg:#ffffff; --bubbleInk:#3c3c3c; --pillBg:#ffffff;
+    --accentA:#58cc02; --accentB:#1cb0f6; --switchOn:#58cc02; --panelGlow:rgba(88,204,2,.35);
   }
   /* ---- Nintendo Switch 2 vibe (gorilla theme only) ---- */
   body[data-theme="gorilla"] .brand{ letter-spacing:.5px; }
@@ -78,7 +78,7 @@
   html,body{margin:0; height:100%; overflow:hidden;}
   body{ font-family:var(--font); color:var(--ink); background:var(--bg); background-attachment:fixed;
     user-select:none; -webkit-user-select:none; touch-action:manipulation; transition:background .4s ease,color .3s ease;}
-  #app{height:100dvh; height:100vh; display:flex; flex-direction:column; padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
+  #app{height:100vh; height:100dvh; display:flex; flex-direction:column; padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
 
   header{display:flex; align-items:center; justify-content:space-between; padding:8px 16px; z-index:3;}
   .brand{font-weight:bold; font-size:clamp(20px,4.5vw,30px); letter-spacing:.5px;
@@ -156,7 +156,7 @@
     background:rgba(20,15,40,.5); backdrop-filter:blur(7px);}
   .overlay.hidden{display:none;}
   .panel{background:var(--paper); color:var(--ink); border-radius:30px; padding:22px 20px; width:min(460px,94vw); text-align:center;
-    box-shadow:0 24px 60px var(--panelGlow); max-height:92vh; overflow:auto;}
+    box-shadow:0 24px 60px var(--panelGlow); max-height:92vh; max-height:92dvh; overflow:auto;}
   .panel h1{margin:4px 0 2px; font-size:clamp(28px,7vw,40px);
     background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand3)); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .panel .sub{margin:2px 0 14px; opacity:.7; font-size:14px;}
@@ -199,7 +199,7 @@
 <canvas id="confetti"></canvas>
 <div id="app">
   <header>
-    <div class="brand">★ Note Stars ★</div>
+    <div class="brand">Note Stars</div>
     <div class="scorebox">
       <div class="pill star" id="starPill">⭐ <span id="score">0</span></div>
       <div class="pill streak" id="streakPill">🔥 <span id="streak">0</span></div>
@@ -471,7 +471,7 @@ const THEMES={
     confetti:["#8bbf6e","#cfe3b5","#f6e7a8","#bfe0e8","#e8d3b0","#a7c98f"],
     praise:["Lovely~","The forest smiles","So gentle~","Wonderful~","Peaceful!","Sweet~"],
     nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]},
-  gorilla:{deco:"🎮🦍🎮", mascot:mGorilla, correct:"jungle",
+  gorilla:{deco:"🍌🦍🍌", mascot:mGorilla, correct:"jungle",
     confetti:["#ff3c41","#00b3e6","#ffffff","#ffd23c","#00c389","#7a5cff"],
     praise:["Player 1 wins!","Nice combo!","Level up!","BANANAS! 🍌","New high score!","Mighty!"],
     nudge:["Try again!","So close!","One more go!","Almost — retry!"]}
