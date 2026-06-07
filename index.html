@@ -56,13 +56,14 @@
   }
   body[data-theme="gorilla"]{
     --font:"Marker Felt","Chalkboard SE","Comic Sans MS",-apple-system,system-ui,sans-serif;
-    --ink:#3c2e24; --paper:#fbf3e6;
-    --bg:radial-gradient(120% 80% at 10% 0%, #d8e8c0 0%, transparent 55%),
-        radial-gradient(120% 90% at 95% 10%, #f4dfae 0%, transparent 55%),
-        linear-gradient(180deg, #eef6df 0%, #cfe6c0 100%);
-    --brand1:#6b8e4e; --brand2:#caa472; --brand3:#5c4a3c;
-    --bubbleBg:#fff; --bubbleInk:#3c2e24; --pillBg:#fff;
-    --accentA:#6b8e4e; --accentB:#caa472; --switchOn:#6b8e4e; --panelGlow:rgba(60,46,36,.4);
+    --ink:#3a2414; --paper:#fff6e0;
+    --bg:radial-gradient(95% 60% at 50% -8%, #ffdf5e 0%, transparent 55%),
+        radial-gradient(120% 80% at 8% 25%, #5fc24a 0%, transparent 50%),
+        radial-gradient(120% 85% at 95% 22%, #2f9b3e 0%, transparent 52%),
+        linear-gradient(180deg, #2e913e 0%, #145a27 100%);
+    --brand1:#e11f26; --brand2:#ffc400; --brand3:#8a4a23;
+    --bubbleBg:#fff; --bubbleInk:#3a2414; --pillBg:#fff;
+    --accentA:#e11f26; --accentB:#f7a400; --switchOn:#e11f26; --panelGlow:rgba(10,40,15,.55);
   }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -95,9 +96,13 @@
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
   .buddy.cheer{animation:cheer .6s ease;}
   @keyframes cheer{0%{transform:scale(1)}30%{transform:scale(1.18) rotate(-6deg)}60%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1)}}
-  @keyframes chestThump{0%,100%{transform:scale(1) translateY(0) rotate(0)}14%{transform:scale(1.18,0.86) translateY(5px) rotate(0)}28%{transform:scale(1) translateY(0) rotate(0)}42%{transform:scale(1.18,0.86) translateY(5px) rotate(0)}56%{transform:scale(1) translateY(0) rotate(0)}78%{transform:scale(1.1) translateY(-9px) rotate(-5deg)}}
-  @keyframes gorillaOops{0%,100%{transform:rotate(0) translateY(0)}18%{transform:rotate(-15deg) translateY(2px)}38%{transform:rotate(12deg) translateY(-5px)}58%{transform:rotate(-10deg) translateY(2px)}78%{transform:rotate(6deg) translateY(-2px)}}
-  body[data-theme="gorilla"] .buddy.cheer{animation:chestThump .75s ease;}
+  @keyframes gBeat{0%,100%{transform:translateY(0) scaleY(1)}18%{transform:translateY(4px) scaleY(.96)}33%{transform:translateY(-3px) scaleY(1)}48%{transform:translateY(4px) scaleY(.96)}63%{transform:translateY(-3px) scaleY(1)}80%{transform:translateY(-7px)}}
+  @keyframes gThumpL{0%,100%{transform:translate(0,0)}18%{transform:translate(15px,-21px)}33%{transform:translate(7px,-9px)}48%{transform:translate(15px,-21px)}63%{transform:translate(7px,-9px)}80%{transform:translate(11px,-15px)}}
+  @keyframes gThumpR{0%,100%{transform:translate(0,0)}18%{transform:translate(-15px,-21px)}33%{transform:translate(-7px,-9px)}48%{transform:translate(-15px,-21px)}63%{transform:translate(-7px,-9px)}80%{transform:translate(-11px,-15px)}}
+  @keyframes gorillaOops{0%,100%{transform:rotate(0) translateY(0)}18%{transform:rotate(-13deg) translateY(2px)}38%{transform:rotate(11deg) translateY(-4px)}58%{transform:rotate(-9deg) translateY(2px)}78%{transform:rotate(5deg) translateY(-2px)}}
+  body[data-theme="gorilla"] .buddy.cheer{animation:gBeat .72s ease;}
+  body[data-theme="gorilla"] .buddy.cheer .gfist-l{animation:gThumpL .72s ease;}
+  body[data-theme="gorilla"] .buddy.cheer .gfist-r{animation:gThumpR .72s ease;}
   body[data-theme="gorilla"] .buddy.oops{animation:gorillaOops .65s ease;}
   .bubble{position:relative; background:var(--bubbleBg); color:var(--bubbleInk); border-radius:18px; padding:8px 14px; font-weight:bold; font-size:clamp(15px,3.6vw,21px);
     box-shadow:0 8px 0 rgba(0,0,0,.1); min-width:90px; text-align:center; min-height:20px;}
@@ -416,20 +421,30 @@ function mForest(mood){
 }
 function mGorilla(mood){
   const happy=mood==="happy",think=mood==="think";
-  const eyes=happy?'<path d="M44 68 q6 -7 12 0" stroke="#2a2018" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M64 68 q6 -7 12 0" stroke="#2a2018" stroke-width="4" fill="none" stroke-linecap="round"/>'
-    :think?'<circle cx="48" cy="70" r="5" fill="#2a2018"/><circle cx="78" cy="66" r="4" fill="#2a2018"/><path d="M70 58 q7 -5 13 -1" stroke="#2a2018" stroke-width="3" fill="none" stroke-linecap="round"/>'
-    :'<circle cx="48" cy="69" r="5.5" fill="#2a2018"/><circle cx="72" cy="69" r="5.5" fill="#2a2018"/><circle cx="50" cy="67" r="1.6" fill="#fff"/><circle cx="74" cy="67" r="1.6" fill="#fff"/>';
-  const mouth=happy?'<path d="M42 96 Q60 118 78 96 Q60 108 42 96 Z" fill="#5a2a20"/><path d="M48 98 Q60 105 72 98" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>'
-    :think?'<path d="M50 100 q10 5 20 -3" stroke="#5a2a20" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="68" cy="103" rx="4" ry="6" fill="#ff8a8a"/>'
-    :'<path d="M49 97 Q60 103 71 97" stroke="#5a2a20" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-  return '<ellipse cx="60" cy="124" rx="32" ry="6" fill="rgba(0,0,0,.12)"/>'
-    +'<ellipse cx="22" cy="66" rx="10" ry="14" fill="#4a3a30" stroke="#382a22" stroke-width="2"/><ellipse cx="98" cy="66" rx="10" ry="14" fill="#4a3a30" stroke="#382a22" stroke-width="2"/>'
-    +'<ellipse cx="60" cy="62" rx="38" ry="40" fill="#5c4a3c" stroke="#3c2e24" stroke-width="2.5"/>'
-    +'<path d="M26 52 Q60 38 94 52 Q78 58 60 58 Q42 58 26 52 Z" fill="#473830"/>'
-    +'<ellipse cx="60" cy="92" rx="30" ry="32" fill="#cdb8a0"/>'
+  const eyes=happy?'<path d="M45 30 q6 -6 12 0" stroke="#221912" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M63 30 q6 -6 12 0" stroke="#221912" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    :think?'<circle cx="51" cy="32" r="4" fill="#221912"/><circle cx="69" cy="30" r="3.5" fill="#221912"/><path d="M62 24 q7 -4 13 -1" stroke="#221912" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+    :'<circle cx="51" cy="31" r="4.6" fill="#221912"/><circle cx="69" cy="31" r="4.6" fill="#221912"/><circle cx="52.6" cy="29.4" r="1.4" fill="#fff"/><circle cx="70.6" cy="29.4" r="1.4" fill="#fff"/>';
+  const mouth=happy?'<path d="M48 48 Q60 60 72 48 Q60 54 48 48 Z" fill="#5a2a20"/><path d="M52 49 Q60 53 68 49" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+    :think?'<path d="M52 50 q9 4 17 -2" stroke="#5a2a20" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+    :'<path d="M51 49 Q60 54 69 49" stroke="#5a2a20" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  const head='<ellipse cx="34" cy="28" rx="7" ry="9" fill="#4a3a2e" stroke="#2e2118" stroke-width="2"/>'
+    +'<ellipse cx="86" cy="28" rx="7" ry="9" fill="#4a3a2e" stroke="#2e2118" stroke-width="2"/>'
+    +'<ellipse cx="60" cy="30" rx="27" ry="25" fill="#4a3a2e" stroke="#2e2118" stroke-width="2.5"/>'
+    +'<ellipse cx="60" cy="42" rx="20" ry="16" fill="#c9b39a"/>'
+    +'<path d="M40 24 Q60 14 80 24 Q66 22 60 22 Q54 22 40 24 Z" fill="#3a2c22"/>'
     +eyes
-    +'<path d="M53 90 Q60 86 67 90" stroke="#3c2e24" stroke-width="2" fill="none"/><ellipse cx="54" cy="93" rx="3.4" ry="4.4" fill="#2a2018"/><ellipse cx="66" cy="93" rx="3.4" ry="4.4" fill="#2a2018"/>'
+    +'<ellipse cx="55" cy="44" rx="2.6" ry="3.4" fill="#221912"/><ellipse cx="65" cy="44" rx="2.6" ry="3.4" fill="#221912"/>'
     +mouth;
+  const torso='<path d="M30 72 Q26 56 46 54 L74 54 Q94 56 90 72 L86 106 Q84 116 70 116 L50 116 Q36 116 34 106 Z" fill="#4a3a2e" stroke="#2e2118" stroke-width="2.5"/>'
+    +'<ellipse cx="60" cy="86" rx="21" ry="23" fill="#b79877"/>';
+  const tie='<path d="M54 56 L60 52 L66 56 L60 62 Z" fill="#e11f26" stroke="#b3171c" stroke-width="1.5"/>'
+    +'<path d="M56 62 L64 62 L68 98 L60 104 L52 98 Z" fill="#e11f26" stroke="#b3171c" stroke-width="1.5"/>';
+  const feet='<ellipse cx="46" cy="120" rx="13" ry="8" fill="#3a2c22" stroke="#2e2118" stroke-width="2"/>'
+    +'<ellipse cx="74" cy="120" rx="13" ry="8" fill="#3a2c22" stroke="#2e2118" stroke-width="2"/>';
+  const armL='<g class="gfist-l"><path d="M34 64 Q16 72 18 94 Q20 108 34 105 Q41 101 38 86 Q40 72 46 66 Z" fill="#4a3a2e" stroke="#2e2118" stroke-width="2.5"/><circle cx="26" cy="102" r="11" fill="#3a2c22" stroke="#2e2118" stroke-width="2"/></g>';
+  const armR='<g class="gfist-r"><path d="M86 64 Q104 72 102 94 Q100 108 86 105 Q79 101 82 86 Q80 72 74 66 Z" fill="#4a3a2e" stroke="#2e2118" stroke-width="2.5"/><circle cx="94" cy="102" r="11" fill="#3a2c22" stroke="#2e2118" stroke-width="2"/></g>';
+  return '<ellipse cx="60" cy="126" rx="42" ry="5" fill="rgba(0,0,0,.18)"/>'
+    +feet+torso+tie+head+armL+armR;
 }
 
 const THEMES={
@@ -448,10 +463,10 @@ const THEMES={
     confetti:["#8bbf6e","#cfe3b5","#f6e7a8","#bfe0e8","#e8d3b0","#a7c98f"],
     praise:["Lovely~","The forest smiles","So gentle~","Wonderful~","Peaceful!","Sweet~"],
     nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]},
-  gorilla:{deco:"🦍🎵🦍", mascot:mGorilla, correct:"jungle",
-    confetti:["#6b8e4e","#a8c66c","#f4c95d","#caa472","#5c4a3c","#cdb8a0"],
-    praise:["Boom! Got it!","Mighty!","You crushed it!","Big win!","Yeah!","Strong work!"],
-    nudge:["Ooh, so close!","Try again, champ!","Hmm, look again!","One more swing!"]}
+  gorilla:{deco:"🦍🍌🦍", mascot:mGorilla, correct:"jungle",
+    confetti:["#e11f26","#ffc400","#f7a400","#3fae3f","#8a4a23","#fff3c4"],
+    praise:["BANANAS! 🍌","DK SMASH!","Top banana!","Kong strong!","BOOM!","Mighty!"],
+    nudge:["Try again, Kong!","So close!","Grab that banana!","One more swing!"]}
 };
 
 /* ---------- audio ---------- */
