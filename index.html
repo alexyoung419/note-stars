@@ -282,6 +282,14 @@
       <textarea class="nameinput" id="fbText" placeholder="What happened? What would make it better?"></textarea>
     </div>
     <button class="bigbtn" id="fbSend">✉️ Open email to send</button>
+    <div class="group" id="fbFallback" style="display:none">
+      <span class="lab">Didn't open? Send it manually:</span>
+      <div class="choices">
+        <button class="choice" id="fbGmailBtn">📧 Open Gmail</button>
+        <button class="choice" id="fbCopyBtn">📋 Copy message</button>
+      </div>
+      <div class="sub" style="margin-top:8px">…then send to <b>alyoung@gmail.com</b></div>
+    </div>
     <button class="moretoggle" id="fbClose">Cancel</button>
   </div>
 </div>
@@ -615,24 +623,38 @@ document.getElementById("startBtn").addEventListener("click",()=>{
 const FB_TO="alyoung@gmail.com";
 const fbOverlay=document.getElementById("fbOverlay");
 const fbMoodEls=document.querySelectorAll("#fbMood .choice");
+const fbFallback=document.getElementById("fbFallback");
+const fbCopyBtn=document.getElementById("fbCopyBtn"), fbGmailBtn=document.getElementById("fbGmailBtn");
 const FB_LABEL={love:"😍 Love it",meh:"😐 Meh",bug:"🐛 Bug report",idea:"💡 Idea"};
-let fbMood="love";
-function openFb(){ fbOverlay.classList.remove("hidden"); rotateHint.classList.remove("show"); }
+let fbMood="love", fbGmailUrl="", fbPlain="";
+function openFb(){ fbOverlay.classList.remove("hidden"); rotateHint.classList.remove("show"); fbFallback.style.display="none"; }
 function closeFb(){ fbOverlay.classList.add("hidden"); }
+function buildFb(){
+  const txt=document.getElementById("fbText").value.trim();
+  const lbl=FB_LABEL[fbMood]||fbMood;
+  const ctx="clef:"+state.clef+" · level:"+state.level+" · mode:"+state.mode+" · theme:"+state.theme;
+  const subject="Note Stars: "+lbl;
+  const body=(txt?txt+"\n\n":"")+"——————\nSent from Note Stars 🌟\n"+lbl+"\nSettings: "+ctx+"\n"+navigator.userAgent;
+  fbGmailUrl="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(FB_TO)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+  fbPlain="To: "+FB_TO+"\nSubject: "+subject+"\n\n"+body;
+  return {subject,body};
+}
 document.getElementById("fbBtn").addEventListener("click",openFb);
 document.getElementById("fbBtnSettings").addEventListener("click",openFb);
 document.getElementById("fbClose").addEventListener("click",closeFb);
 fbOverlay.addEventListener("click",e=>{ if(e.target===fbOverlay) closeFb(); });
 fbMoodEls.forEach(c=>c.addEventListener("click",()=>{ fbMood=c.dataset.mood; fbMoodEls.forEach(x=>x.classList.toggle("on",x===c)); }));
 document.getElementById("fbSend").addEventListener("click",()=>{
-  const txt=document.getElementById("fbText").value.trim();
-  const lbl=FB_LABEL[fbMood]||fbMood;
-  const ctx="clef:"+state.clef+" · level:"+state.level+" · mode:"+state.mode+" · theme:"+state.theme;
-  const subject="Note Stars: "+lbl;
-  const body=(txt?txt+"\n\n":"")+"——————\nSent from Note Stars 🌟\n"+lbl+"\nSettings: "+ctx+"\n"+navigator.userAgent;
+  const {subject,body}=buildFb();
   window.location.href="mailto:"+FB_TO+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-  document.getElementById("fbText").value="";
-  closeFb();
+  fbFallback.style.display="block";  // in case no mail app opened
+});
+fbGmailBtn.addEventListener("click",()=>{ if(!fbGmailUrl) buildFb(); window.open(fbGmailUrl,"_blank","noopener"); });
+fbCopyBtn.addEventListener("click",()=>{
+  if(!fbPlain) buildFb();
+  const done=()=>{ fbCopyBtn.textContent="✅ Copied!"; setTimeout(()=>fbCopyBtn.textContent="📋 Copy message",1600); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(fbPlain).then(done,done); }
+  else { const t=document.getElementById("fbText"); t.value=fbPlain; t.select(); try{document.execCommand("copy");}catch(e){} done(); }
 });
 
 applyTheme(state.theme); buildAnswer(); syncPanel();
