@@ -150,6 +150,7 @@
   .tcard .nm{font-weight:bold; font-size:13px; margin-top:4px;}
   .tcard.on{border-color:var(--accentA); transform:translateY(-3px) scale(1.03); box-shadow:0 9px 0 rgba(0,0,0,.12);}
   .nameinput{width:100%; border:3px solid #e8e2f0; border-radius:15px; padding:11px 14px; font-size:18px; font-family:inherit; text-align:center;}
+  textarea.nameinput{text-align:left; resize:none; min-height:80px; font-size:16px; line-height:1.35;}
   .toggle{display:flex; align-items:center; justify-content:space-between; background:#fff; border:3px solid #e8e2f0; border-radius:15px; padding:9px 16px; color:#2b2350;}
   .switch{width:58px; height:32px; border-radius:999px; background:#d9d2ea; position:relative; transition:.2s; cursor:pointer; flex:none;}
   .switch.on{background:var(--switchOn);}
@@ -171,6 +172,7 @@
     <div class="scorebox">
       <div class="pill star" id="starPill">⭐ <span id="score">0</span></div>
       <div class="pill streak" id="streakPill">🔥 <span id="streak">0</span></div>
+      <button class="gear" id="fbBtn" aria-label="Send feedback">💬</button>
       <button class="gear" id="gearBtn" aria-label="Settings">⚙️</button>
     </div>
   </header>
@@ -256,6 +258,31 @@
         <div><b>Hand colors (L / R)</b></div><div class="switch on" id="handSwitch"></div>
       </div></div>
     </div>
+
+    <button class="moretoggle" id="fbBtnSettings">💬 Send feedback</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="fbOverlay">
+  <div class="panel">
+    <div style="font-size:42px; line-height:1">💬</div>
+    <h1>Tell us!</h1>
+    <div class="sub">How's Note Stars going? 🌟</div>
+    <div class="group">
+      <span class="lab">What's up?</span>
+      <div class="choices" id="fbMood">
+        <button class="choice on" data-mood="love">😍 Love it</button>
+        <button class="choice" data-mood="meh">😐 Meh</button>
+        <button class="choice" data-mood="bug">🐛 Bug</button>
+        <button class="choice" data-mood="idea">💡 Idea</button>
+      </div>
+    </div>
+    <div class="group">
+      <span class="lab">Message (optional)</span>
+      <textarea class="nameinput" id="fbText" placeholder="What happened? What would make it better?"></textarea>
+    </div>
+    <button class="bigbtn" id="fbSend">✉️ Open email to send</button>
+    <button class="moretoggle" id="fbClose">Cancel</button>
   </div>
 </div>
 
@@ -582,6 +609,30 @@ document.getElementById("startBtn").addEventListener("click",()=>{
   store.set("ns2_theme",state.theme); store.set("ns2_clef",state.clef); store.set("ns2_level",state.level); store.set("ns2_namesys",state.naming);
   store.set("ns2_mode",state.mode); store.set("ns2_labels",state.keyLabels?"1":"0"); store.set("ns2_hint",state.colorHint?"1":"0"); store.set("ns2_hand",state.handCue?"1":"0");
   state.pool=buildPool(state.clef,state.level); overlay.classList.add("hidden"); buildAnswer(); nextNote(); updateRotateHint();
+});
+
+/* ---------- feedback ---------- */
+const FB_TO="alyoung@gmail.com";
+const fbOverlay=document.getElementById("fbOverlay");
+const fbMoodEls=document.querySelectorAll("#fbMood .choice");
+const FB_LABEL={love:"😍 Love it",meh:"😐 Meh",bug:"🐛 Bug report",idea:"💡 Idea"};
+let fbMood="love";
+function openFb(){ fbOverlay.classList.remove("hidden"); rotateHint.classList.remove("show"); }
+function closeFb(){ fbOverlay.classList.add("hidden"); }
+document.getElementById("fbBtn").addEventListener("click",openFb);
+document.getElementById("fbBtnSettings").addEventListener("click",openFb);
+document.getElementById("fbClose").addEventListener("click",closeFb);
+fbOverlay.addEventListener("click",e=>{ if(e.target===fbOverlay) closeFb(); });
+fbMoodEls.forEach(c=>c.addEventListener("click",()=>{ fbMood=c.dataset.mood; fbMoodEls.forEach(x=>x.classList.toggle("on",x===c)); }));
+document.getElementById("fbSend").addEventListener("click",()=>{
+  const txt=document.getElementById("fbText").value.trim();
+  const lbl=FB_LABEL[fbMood]||fbMood;
+  const ctx="clef:"+state.clef+" · level:"+state.level+" · mode:"+state.mode+" · theme:"+state.theme;
+  const subject="Note Stars: "+lbl;
+  const body=(txt?txt+"\n\n":"")+"——————\nSent from Note Stars 🌟\n"+lbl+"\nSettings: "+ctx+"\n"+navigator.userAgent;
+  window.location.href="mailto:"+FB_TO+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+  document.getElementById("fbText").value="";
+  closeFb();
 });
 
 applyTheme(state.theme); buildAnswer(); syncPanel();
