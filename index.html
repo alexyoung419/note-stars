@@ -91,6 +91,8 @@
 
   .answerwrap{padding:8px 10px 18px; z-index:3;}
   .piano{position:relative; height:clamp(96px,20vh,150px); max-width:920px; margin:0 auto; width:100%; display:flex;}
+  @media (orientation:portrait){ .piano{height:clamp(60px,11vh,100px);} }
+  @media (orientation:landscape){ .piano{height:clamp(130px,36vh,230px);} svg.staff{width:min(34vw,220px);} }
   .wkey{flex:1 1 0; min-width:0; background:linear-gradient(#ffffff,#f1ede4); border:1px solid #d8d2c4; border-top:none;
     border-radius:0 0 10px 10px; box-shadow:0 7px 0 rgba(0,0,0,.13), inset 0 -10px 10px rgba(0,0,0,.04);
     position:relative; cursor:pointer; display:flex; align-items:flex-end; justify-content:center; padding-bottom:9px;}
