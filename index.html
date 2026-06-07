@@ -53,6 +53,16 @@
     --bubbleBg:#fff; --bubbleInk:#3a4a32; --pillBg:#fff;
     --accentA:#8bbf6e; --accentB:#6fa8b0; --switchOn:#8bbf6e; --panelGlow:rgba(60,90,50,.4);
   }
+  body[data-theme="gorilla"]{
+    --font:"Marker Felt","Chalkboard SE","Comic Sans MS",-apple-system,system-ui,sans-serif;
+    --ink:#3c2e24; --paper:#fbf3e6;
+    --bg:radial-gradient(120% 80% at 10% 0%, #d8e8c0 0%, transparent 55%),
+        radial-gradient(120% 90% at 95% 10%, #f4dfae 0%, transparent 55%),
+        linear-gradient(180deg, #eef6df 0%, #cfe6c0 100%);
+    --brand1:#6b8e4e; --brand2:#caa472; --brand3:#5c4a3c;
+    --bubbleBg:#fff; --bubbleInk:#3c2e24; --pillBg:#fff;
+    --accentA:#6b8e4e; --accentB:#caa472; --switchOn:#6b8e4e; --panelGlow:rgba(60,46,36,.4);
+  }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0; height:100%; overflow:hidden;}
@@ -84,6 +94,10 @@
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
   .buddy.cheer{animation:cheer .6s ease;}
   @keyframes cheer{0%{transform:scale(1)}30%{transform:scale(1.18) rotate(-6deg)}60%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1)}}
+  @keyframes chestThump{0%,100%{transform:scale(1) translateY(0) rotate(0)}14%{transform:scale(1.18,0.86) translateY(5px) rotate(0)}28%{transform:scale(1) translateY(0) rotate(0)}42%{transform:scale(1.18,0.86) translateY(5px) rotate(0)}56%{transform:scale(1) translateY(0) rotate(0)}78%{transform:scale(1.1) translateY(-9px) rotate(-5deg)}}
+  @keyframes gorillaOops{0%,100%{transform:rotate(0) translateY(0)}18%{transform:rotate(-15deg) translateY(2px)}38%{transform:rotate(12deg) translateY(-5px)}58%{transform:rotate(-10deg) translateY(2px)}78%{transform:rotate(6deg) translateY(-2px)}}
+  body[data-theme="gorilla"] .buddy.cheer{animation:chestThump .75s ease;}
+  body[data-theme="gorilla"] .buddy.oops{animation:gorillaOops .65s ease;}
   .bubble{position:relative; background:var(--bubbleBg); color:var(--bubbleInk); border-radius:18px; padding:8px 14px; font-weight:bold; font-size:clamp(15px,3.6vw,21px);
     box-shadow:0 8px 0 rgba(0,0,0,.1); min-width:90px; text-align:center; min-height:20px;}
   .bubble:after{content:""; position:absolute; left:24px; bottom:-12px; border:8px solid transparent; border-top-color:var(--bubbleBg); border-bottom:0;}
@@ -231,7 +245,8 @@
       <div class="group">
         <span class="lab">Theme</span>
         <div class="themes" id="themeCards">
-          <div class="tcard on" data-theme="foxy"><div class="em">🦊</div><div class="nm">Foxy</div></div>
+          <div class="tcard on" data-theme="gorilla"><div class="em">🦍</div><div class="nm">Gorilla</div></div>
+          <div class="tcard" data-theme="foxy"><div class="em">🦊</div><div class="nm">Foxy</div></div>
           <div class="tcard" data-theme="formal"><div class="em">🎩</div><div class="nm">Mr. Baby</div></div>
           <div class="tcard" data-theme="punk"><div class="em">🤘</div><div class="nm">Punk Rock</div></div>
           <div class="tcard" data-theme="forest"><div class="em">🌿</div><div class="nm">Forest</div></div>
@@ -398,6 +413,23 @@ function mForest(mood){
     +'<circle cx="44" cy="84" r="5" fill="#e6b8b0" opacity=".5"/><circle cx="76" cy="84" r="5" fill="#e6b8b0" opacity=".5"/>'
     +eyes+'<circle cx="60" cy="82" r="2.5" fill="#6a6a55"/>'+mouth;
 }
+function mGorilla(mood){
+  const happy=mood==="happy",think=mood==="think";
+  const eyes=happy?'<path d="M44 68 q6 -7 12 0" stroke="#2a2018" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M64 68 q6 -7 12 0" stroke="#2a2018" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    :think?'<circle cx="48" cy="70" r="5" fill="#2a2018"/><circle cx="78" cy="66" r="4" fill="#2a2018"/><path d="M70 58 q7 -5 13 -1" stroke="#2a2018" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    :'<circle cx="48" cy="69" r="5.5" fill="#2a2018"/><circle cx="72" cy="69" r="5.5" fill="#2a2018"/><circle cx="50" cy="67" r="1.6" fill="#fff"/><circle cx="74" cy="67" r="1.6" fill="#fff"/>';
+  const mouth=happy?'<path d="M42 96 Q60 118 78 96 Q60 108 42 96 Z" fill="#5a2a20"/><path d="M48 98 Q60 105 72 98" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    :think?'<path d="M50 100 q10 5 20 -3" stroke="#5a2a20" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="68" cy="103" rx="4" ry="6" fill="#ff8a8a"/>'
+    :'<path d="M49 97 Q60 103 71 97" stroke="#5a2a20" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+  return '<ellipse cx="60" cy="124" rx="32" ry="6" fill="rgba(0,0,0,.12)"/>'
+    +'<ellipse cx="22" cy="66" rx="10" ry="14" fill="#4a3a30" stroke="#382a22" stroke-width="2"/><ellipse cx="98" cy="66" rx="10" ry="14" fill="#4a3a30" stroke="#382a22" stroke-width="2"/>'
+    +'<ellipse cx="60" cy="62" rx="38" ry="40" fill="#5c4a3c" stroke="#3c2e24" stroke-width="2.5"/>'
+    +'<path d="M26 52 Q60 38 94 52 Q78 58 60 58 Q42 58 26 52 Z" fill="#473830"/>'
+    +'<ellipse cx="60" cy="92" rx="30" ry="32" fill="#cdb8a0"/>'
+    +eyes
+    +'<path d="M53 90 Q60 86 67 90" stroke="#3c2e24" stroke-width="2" fill="none"/><ellipse cx="54" cy="93" rx="3.4" ry="4.4" fill="#2a2018"/><ellipse cx="66" cy="93" rx="3.4" ry="4.4" fill="#2a2018"/>'
+    +mouth;
+}
 
 const THEMES={
   foxy:{deco:"🎵🦊🎵", mascot:mFox, correct:"sparkle",
@@ -414,7 +446,11 @@ const THEMES={
   forest:{deco:"🌿🍃🌿", mascot:mForest, correct:"marimba",
     confetti:["#8bbf6e","#cfe3b5","#f6e7a8","#bfe0e8","#e8d3b0","#a7c98f"],
     praise:["Lovely~","The forest smiles","So gentle~","Wonderful~","Peaceful!","Sweet~"],
-    nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]}
+    nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]},
+  gorilla:{deco:"🦍🎵🦍", mascot:mGorilla, correct:"jungle",
+    confetti:["#6b8e4e","#a8c66c","#f4c95d","#caa472","#5c4a3c","#cdb8a0"],
+    praise:["Boom! Got it!","Mighty!","You crushed it!","Big win!","Yeah!","Strong work!"],
+    nudge:["Ooh, so close!","Try again, champ!","Hmm, look again!","One more swing!"]}
 };
 
 /* ---------- audio ---------- */
@@ -437,11 +473,12 @@ function playCorrect(){ audioOn(); if(!actx) return; const t=actx.currentTime, s
   if(s==="powerchord"){ [146.83,220.0,293.66].forEach(f=>{ tone(f,t,0.5,0.14,"sawtooth"); tone(f*1.005,t,0.5,0.10,"sawtooth"); }); tone(880,t+0.04,0.3,0.12,"square"); }
   else if(s==="musicbox"){ [1046.5,1318.5,1568.0,2093.0].forEach((f,i)=>tone(f,t+i*0.08,0.9,0.11,"sine")); }
   else if(s==="marimba"){ [659.25,783.99,987.77,1318.5].forEach((f,i)=>tone(f,t+i*0.06,0.4,0.16,"triangle")); }
+  else if(s==="jungle"){ tone(98,t,0.22,0.22,"sine"); tone(98,t+0.16,0.22,0.18,"sine"); [261.6,329.6,392.0,523.3].forEach((f,i)=>tone(f,t+0.08+i*0.07,0.4,0.15,"square")); }
   else { [1046.5,1318.5,1568.0,2093.0].forEach((f,i)=>tone(f,t+i*0.07,0.5,0.16,"sine")); } }
 function playWrong(){ audioOn(); if(!actx) return; const t=actx.currentTime; tone(196,t,0.18,0.13,"sine"); tone(174.6,t+0.12,0.22,0.13,"sine"); }
 
 /* ---------- theme apply ---------- */
-let PRAISE=THEMES.foxy.praise, NUDGE=THEMES.foxy.nudge, mascotFn=mFox, CC=THEMES.foxy.confetti;
+let PRAISE=THEMES.gorilla.praise, NUDGE=THEMES.gorilla.nudge, mascotFn=mGorilla, CC=THEMES.gorilla.confetti;
 const buddy=document.getElementById("buddy"), deco=document.getElementById("deco");
 function drawBuddy(mood){ buddy.innerHTML=mascotFn(mood); }
 function applyTheme(id){ const th=THEMES[id]||THEMES.foxy; document.body.dataset.theme=id;
@@ -541,7 +578,7 @@ window.addEventListener("orientationchange",()=>setTimeout(updateRotateHint,200)
 
 /* ---------- game ---------- */
 const state={
-  theme:store.get("ns2_theme","foxy"),
+  theme:store.get("ns2_theme","gorilla"),
   clef:store.get("ns2_clef","both"), level:store.get("ns2_level","step3"),
   naming:store.get("ns2_namesys","abc"), mode:store.get("ns2_mode","keys"),
   keyLabels:store.get("ns2_labels","1")==="1", colorHint:store.get("ns2_hint","1")==="1", handCue:store.get("ns2_hand","1")==="1",
@@ -570,12 +607,13 @@ function onAnswer(letter,oct,el){
     state.score++; state.streak++; scoreEl.textContent=state.score; streakEl.textContent=state.streak; bump("starPill");
     let msg; if(state.streak>0 && state.streak%5===0){ msg=state.streak+" in a row! 🎉"; bump("streakPill"); }
     else msg=pick(PRAISE)+" That's "+nameLabel(state.current.letter)+"!";
-    say(msg,"happy"); buddy.classList.add("cheer"); setTimeout(()=>buddy.classList.remove("cheer"),600); confetti();
+    say(msg,"happy"); buddy.classList.add("cheer"); setTimeout(()=>buddy.classList.remove("cheer"),750); confetti();
     setTimeout(nextNote,1150);
   }else{
     state.attempts++; playWrong(); state.streak=0; streakEl.textContent=0;
     const close=(oct!==null && letter===state.current.letter)?"Right name — try higher or lower!":pick(NUDGE);
     say(close,"think");
+    buddy.classList.add("oops"); setTimeout(()=>buddy.classList.remove("oops"),650);
     const card=document.getElementById("staffcard"); card.classList.add("wiggle"); setTimeout(()=>card.classList.remove("wiggle"),570);
     if(state.attempts>=2){
       answerEl.querySelectorAll("[data-letter]").forEach(k=>{
