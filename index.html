@@ -136,10 +136,11 @@
     font-size:15px; cursor:pointer; box-shadow:0 5px 0 rgba(0,0,0,.06); transition:.12s; font-family:inherit; color:#2b2350;}
   .choice.on{border-color:var(--accentB); background:#f3f9ff; transform:translateY(-2px); box-shadow:0 7px 0 rgba(0,0,0,.12);}
   /* difficulty range preview */
-  .rangepreview{margin-top:10px; display:flex; flex-direction:column; gap:10px;}
-  .rangepreview .mini{background:#fff; border:3px solid #e8e2f0; border-radius:16px; padding:8px 10px 4px;}
-  .rangepreview .minicap{font-size:12px; font-weight:bold; letter-spacing:.5px; text-transform:uppercase; color:#8a82a6; margin-bottom:2px; display:flex; justify-content:space-between; align-items:baseline;}
-  .rangepreview .minicap .rng{color:#2b2350; opacity:.8; text-transform:none; letter-spacing:0;}
+  .rangepreview{margin-top:8px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
+  .rangepreview .mini{flex:1 1 130px; max-width:185px; background:#fff; border:2px solid #e8e2f0; border-radius:13px; padding:5px 7px 2px;}
+  .rangepreview .minicap{font-size:11px; font-weight:bold; display:flex; justify-content:space-between; gap:6px; margin-bottom:1px;}
+  .rangepreview .minicap .cn{color:#8a82a6; text-transform:uppercase; letter-spacing:.5px;}
+  .rangepreview .minicap .rng{color:#2b2350;}
   .rangepreview svg.ministaff{display:block; width:100%; height:auto;}
   /* theme cards */
   .themes{display:flex; gap:10px; overflow-x:auto; padding:4px 2px 8px; -webkit-overflow-scrolling:touch;}
@@ -193,17 +194,9 @@
   <div class="panel">
     <div id="deco" style="font-size:46px; line-height:1">🎵🦊🎵</div>
     <h1>Note Stars</h1>
-    <div class="sub">Pick a look, pick a clef, and play! 🌟</div>
+    <div class="sub">Tap Play to jump in — or tweak below 🌟</div>
 
-    <div class="group">
-      <span class="lab">Theme</span>
-      <div class="themes" id="themeCards">
-        <div class="tcard on" data-theme="foxy"><div class="em">🦊</div><div class="nm">Foxy</div></div>
-        <div class="tcard" data-theme="formal"><div class="em">🎩</div><div class="nm">Mr. Baby</div></div>
-        <div class="tcard" data-theme="punk"><div class="em">🤘</div><div class="nm">Punk Rock</div></div>
-        <div class="tcard" data-theme="forest"><div class="em">🌿</div><div class="nm">Forest</div></div>
-      </div>
-    </div>
+    <button class="bigbtn" id="startBtn">▶︎ Play!</button>
 
     <div class="group">
       <span class="lab">Which clef?</span>
@@ -218,19 +211,27 @@
     <div class="group">
       <span class="lab">Difficulty</span>
       <div class="choices" id="levelChoices">
-        <button class="choice on" data-level="atoa">🐣 A to A</button>
-        <button class="choice" data-level="easy">✋ F to G</button>
+        <button class="choice on" data-level="step3">🐣 3 notes</button>
+        <button class="choice" data-level="step5">✋ 5 notes</button>
+        <button class="choice" data-level="oct">🎯 Octave</button>
         <button class="choice" data-level="staff">🎵 On the staff</button>
         <button class="choice" data-level="ledger">🚀 Ledger notes</button>
-        <button class="choice" data-level="wide">🦅 Wide range</button>
       </div>
       <div class="rangepreview" id="rangePreview"></div>
     </div>
 
-    <button class="bigbtn" id="startBtn">▶︎ Play!</button>
     <button class="moretoggle" id="moreToggle">More options ▾</button>
 
     <div id="moreOpts" class="collapsed">
+      <div class="group">
+        <span class="lab">Theme</span>
+        <div class="themes" id="themeCards">
+          <div class="tcard on" data-theme="foxy"><div class="em">🦊</div><div class="nm">Foxy</div></div>
+          <div class="tcard" data-theme="formal"><div class="em">🎩</div><div class="nm">Mr. Baby</div></div>
+          <div class="tcard" data-theme="punk"><div class="em">🤘</div><div class="nm">Punk Rock</div></div>
+          <div class="tcard" data-theme="forest"><div class="em">🌿</div><div class="nm">Forest</div></div>
+        </div>
+      </div>
       <div class="group">
         <span class="lab">Note names</span>
         <div class="choices" id="nameSysChoices">
@@ -276,14 +277,16 @@ const dnOf=(l,o)=>o*7+LETTER_IDX[l];
 const fromDn=d=>({letter:LETTERS[((d%7)+7)%7],oct:Math.floor(d/7)});
 
 function nr(a,ao,b,bo){ const lo=dnOf(a,ao),hi=dnOf(b,bo),o=[]; for(let d=lo;d<=hi;d++){ const f=fromDn(d); o.push([f.letter,f.oct]); } return o; }
+// map old saved level ids to the current ladder
+function normLevel(level){ return ({more:"ledger",wide:"ledger",atoa:"step3",easy:"step5"})[level]||level; }
 function buildPool(clef,level){
-  if(level==="more") level="ledger";  // back-compat
+  level=normLevel(level);
   let T,B;
-  if(level==="atoa"){       T=nr("C",4,"A",4); B=nr("A",3,"C",4); }   // A below to A above middle C
-  else if(level==="easy"){  T=nr("C",4,"G",4); B=nr("F",3,"C",4); }   // middle C: down to F, up to G
+  if(level==="step3"){      T=nr("C",4,"E",4); B=nr("A",3,"C",4); }   // 3 notes: middle C up to E / down to A
+  else if(level==="step5"){ T=nr("C",4,"G",4); B=nr("F",3,"C",4); }   // 5 notes: middle C up to G / down to F
+  else if(level==="oct"){   T=nr("C",4,"C",5); B=nr("C",3,"C",4); }   // one octave from middle C
   else if(level==="staff"){ T=nr("E",4,"F",5); B=nr("G",2,"A",3); }   // notes on the staff
-  else if(level==="wide"){  T=nr("A",3,"C",6); B=nr("C",2,"E",4); }   // broad, many ledger lines
-  else {                    T=nr("C",4,"A",5); B=nr("E",2,"C",4); }   // ledger notes (staff +2)
+  else {                    T=nr("C",4,"A",5); B=nr("E",2,"C",4); }   // ledger notes
   const tag=(a,c)=>a.map(([l,o])=>({letter:l,oct:o,clef:c}));
   if(clef==="treble") return tag(T,"treble");
   if(clef==="bass") return tag(B,"bass");
@@ -418,25 +421,25 @@ function renderStaff(n){
 
 /* ---------- difficulty range preview ---------- */
 function miniStaffSVG(clef){
-  const G2=13, T2=40, B2=T2+4*G2, W=300, H=158, lblY=148, lowX=92, highX=232, bx1=64, bx2=260;
+  const G2=10, T2=30, B2=T2+4*G2, W=200, H=120, lblY=108, lowX=64, highX=150, bx1=44, bx2=172;
   const dnB=clef==="treble"?dnOf("E",4):dnOf("G",2);
   const nY=(l,o)=>B2-(dnOf(l,o)-dnB)*(G2/2);
   const pool=buildPool(clef,state.level);
   let lo=pool[0],hi=pool[0],mn=1e9,mx=-1e9;
   pool.forEach(n=>{ const d=dnOf(n.letter,n.oct); if(d<mn){mn=d;lo=n;} if(d>mx){mx=d;hi=n;} });
   const loY=nY(lo.letter,lo.oct), hiY=nY(hi.letter,hi.oct);
-  let lines=""; for(let i=0;i<5;i++){ const ly=T2+i*G2; lines+='<line x1="18" y1="'+ly+'" x2="282" y2="'+ly+'" stroke="#cfc8e2" stroke-width="2" stroke-linecap="round"/>'; }
+  let lines=""; for(let i=0;i<5;i++){ const ly=T2+i*G2; lines+='<line x1="14" y1="'+ly+'" x2="186" y2="'+ly+'" stroke="#cfc8e2" stroke-width="1.6" stroke-linecap="round"/>'; }
   const clefG = clef==="treble"
-    ? '<text x="26" y="'+(B2+10)+'" font-size="98" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
-    : '<text x="28" y="'+(T2+G2*2+7)+'" font-size="66" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
-  const bandTop=Math.min(loY,hiY)-11, bandBot=Math.max(loY,hiY)+11;
-  const band='<rect x="'+bx1+'" y="'+bandTop+'" width="'+(bx2-bx1)+'" height="'+(bandBot-bandTop)+'" rx="11" fill="var(--accentB)" opacity=".16"/>';
-  function ledg(y,x){ let s=""; const a=x-13,b=x+13;
-    if(y<T2) for(let ly=T2-G2; ly>=y-1; ly-=G2) s+='<line x1="'+a+'" y1="'+ly+'" x2="'+b+'" y2="'+ly+'" stroke="#2b2350" stroke-width="2.5" stroke-linecap="round"/>';
-    if(y>B2) for(let ly=B2+G2; ly<=y+1; ly+=G2) s+='<line x1="'+a+'" y1="'+ly+'" x2="'+b+'" y2="'+ly+'" stroke="#2b2350" stroke-width="2.5" stroke-linecap="round"/>';
+    ? '<text x="18" y="'+(B2+7)+'" font-size="66" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
+    : '<text x="20" y="'+(T2+G2*2+5)+'" font-size="44" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
+  const bandTop=Math.min(loY,hiY)-8, bandBot=Math.max(loY,hiY)+8;
+  const band='<rect x="'+bx1+'" y="'+bandTop+'" width="'+(bx2-bx1)+'" height="'+(bandBot-bandTop)+'" rx="8" fill="var(--accentB)" opacity=".16"/>';
+  function ledg(y,x){ let s=""; const a=x-9,b=x+9;
+    if(y<T2) for(let ly=T2-G2; ly>=y-1; ly-=G2) s+='<line x1="'+a+'" y1="'+ly+'" x2="'+b+'" y2="'+ly+'" stroke="#2b2350" stroke-width="1.8" stroke-linecap="round"/>';
+    if(y>B2) for(let ly=B2+G2; ly<=y+1; ly+=G2) s+='<line x1="'+a+'" y1="'+ly+'" x2="'+b+'" y2="'+ly+'" stroke="#2b2350" stroke-width="1.8" stroke-linecap="round"/>';
     return s; }
-  function head(x,y,l){ return '<g transform="rotate(-18 '+x+' '+y+')"><ellipse cx="'+x+'" cy="'+y+'" rx="10" ry="8" fill="'+COLOR[l]+'" stroke="#2b2350" stroke-width="2.5"/></g>'; }
-  function lbl(x,l,o){ return '<text x="'+x+'" y="'+lblY+'" font-size="17" font-weight="bold" text-anchor="middle" fill="'+COLOR[l]+'" font-family="inherit">'+nameLabel(l)+o+'</text>'; }
+  function head(x,y,l){ return '<g transform="rotate(-18 '+x+' '+y+')"><ellipse cx="'+x+'" cy="'+y+'" rx="7" ry="5.5" fill="'+COLOR[l]+'" stroke="#2b2350" stroke-width="2"/></g>'; }
+  function lbl(x,l,o){ return '<text x="'+x+'" y="'+lblY+'" font-size="13" font-weight="bold" text-anchor="middle" fill="'+COLOR[l]+'" font-family="inherit">'+nameLabel(l)+o+'</text>'; }
   const marks = ledg(loY,lowX)+ledg(hiY,highX)+head(lowX,loY,lo.letter)+head(highX,hiY,hi.letter)+lbl(lowX,lo.letter,lo.oct)+lbl(highX,hi.letter,hi.oct);
   return {svg:'<svg viewBox="0 0 '+W+' '+H+'" class="ministaff">'+band+lines+clefG+marks+'</svg>', lo:lo, hi:hi};
 }
@@ -446,8 +449,8 @@ function renderLevelPreview(){
   box.innerHTML = clefs.map(c=>{
     const m=miniStaffSVG(c);
     const rng=nameLabel(m.lo.letter)+m.lo.oct+" – "+nameLabel(m.hi.letter)+m.hi.oct;
-    const name=c==="treble"?"🎼 Treble":"🎵 Bass";
-    return '<div class="mini"><div class="minicap"><span>'+name+'</span><span class="rng">'+rng+'</span></div>'+m.svg+'</div>';
+    const name=c==="treble"?"Treble":"Bass";
+    return '<div class="mini"><div class="minicap"><span class="cn">'+name+'</span><span class="rng">'+rng+'</span></div>'+m.svg+'</div>';
   }).join("");
 }
 
@@ -493,12 +496,12 @@ window.addEventListener("orientationchange",()=>setTimeout(updateRotateHint,200)
 /* ---------- game ---------- */
 const state={
   theme:store.get("ns2_theme","foxy"),
-  clef:store.get("ns2_clef","both"), level:store.get("ns2_level","atoa"),
+  clef:store.get("ns2_clef","both"), level:store.get("ns2_level","step3"),
   naming:store.get("ns2_namesys","abc"), mode:store.get("ns2_mode","keys"),
   keyLabels:store.get("ns2_labels","1")==="1", colorHint:store.get("ns2_hint","1")==="1", handCue:store.get("ns2_hand","1")==="1",
   score:0, streak:0, pool:[], current:null, attempts:0, locked:false
 };
-if(state.level==="more") state.level="ledger";
+state.level=normLevel(state.level);
 const bubble=document.getElementById("bubble"), scoreEl=document.getElementById("score"), streakEl=document.getElementById("streak");
 function say(t,m){ bubble.textContent=t; drawBuddy(m||"idle"); }
 function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
