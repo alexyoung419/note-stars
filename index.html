@@ -56,23 +56,23 @@
   }
   body[data-theme="gorilla"]{
     --font:-apple-system,"SF Pro Rounded","Segoe UI Variable","Segoe UI",system-ui,sans-serif;
-    --ink:#3c3c3c; --paper:#ffffff;
-    --bg:radial-gradient(70% 52% at 10% 6%, rgba(28,176,246,.22) 0%, transparent 55%),
-        radial-gradient(70% 52% at 90% 6%, rgba(88,204,2,.22) 0%, transparent 55%),
-        radial-gradient(90% 70% at 50% 122%, rgba(255,200,0,.18) 0%, transparent 55%),
-        linear-gradient(180deg, #f7fef0 0%, #ddf4ff 100%);
-    --brand1:#58cc02; --brand2:#1cb0f6; --brand3:#ffc800;
-    --bubbleBg:#ffffff; --bubbleInk:#3c3c3c; --pillBg:#ffffff;
-    --accentA:#58cc02; --accentB:#1cb0f6; --switchOn:#58cc02; --panelGlow:rgba(88,204,2,.35);
+    --ink:#3a2a1a; --paper:#fbf3e1;
+    --bg:radial-gradient(70% 50% at 18% 0%, rgba(135,206,235,.45) 0%, transparent 55%),
+        radial-gradient(70% 60% at 85% 8%, rgba(74,124,60,.38) 0%, transparent 60%),
+        radial-gradient(95% 70% at 50% 122%, rgba(139,90,43,.35) 0%, transparent 55%),
+        linear-gradient(180deg, #eaf6e1 0%, #cfe8d8 100%);
+    --brand1:#ef8d2d; --brand2:#f4c20d; --brand3:#4a7c3c;
+    --bubbleBg:#fbf3e1; --bubbleInk:#3a2a1a; --pillBg:#fbf3e1;
+    --accentA:#4a7c3c; --accentB:#2f8fbf; --switchOn:#4a7c3c; --panelGlow:rgba(58,42,26,.55);
   }
-  /* ---- Nintendo Switch 2 vibe (gorilla theme only) ---- */
+  /* ---- jungle / barrel-blast vibe (gorilla theme only) ---- */
   body[data-theme="gorilla"] .brand{ letter-spacing:.5px; }
-  body[data-theme="gorilla"] .staffcard{ box-shadow:0 18px 44px rgba(0,0,0,.5), inset 0 0 0 3px rgba(255,255,255,.65); }
-  body[data-theme="gorilla"] .panel{ box-shadow:0 26px 70px rgba(0,0,0,.65), inset 0 0 0 2px rgba(255,255,255,.6); }
+  body[data-theme="gorilla"] .staffcard{ box-shadow:0 18px 44px rgba(58,42,26,.35), inset 0 0 0 3px rgba(244,194,13,.55); }
+  body[data-theme="gorilla"] .panel{ box-shadow:0 26px 70px rgba(58,42,26,.5), inset 0 0 0 2px rgba(244,194,13,.4); }
   body[data-theme="gorilla"] .pill,
-  body[data-theme="gorilla"] .gear{ box-shadow:0 4px 14px rgba(0,0,0,.45); }
-  body[data-theme="gorilla"] .buddy{ filter:drop-shadow(0 10px 12px rgba(0,0,0,.5)); }
-  body[data-theme="gorilla"] .clefword{ color:#00b3e6; opacity:.85; }
+  body[data-theme="gorilla"] .gear{ box-shadow:0 4px 14px rgba(58,42,26,.35); }
+  body[data-theme="gorilla"] .buddy{ filter:drop-shadow(0 10px 12px rgba(58,42,26,.4)); }
+  body[data-theme="gorilla"] .clefword{ color:#4a7c3c; opacity:.65; }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0; height:100%; overflow:hidden;}
@@ -472,7 +472,7 @@ const THEMES={
     praise:["Lovely~","The forest smiles","So gentle~","Wonderful~","Peaceful!","Sweet~"],
     nudge:["Look softly again~","Almost there~","Once more~","Hmm~"]},
   gorilla:{deco:"🍌🦍🍌", mascot:mGorilla, correct:"jungle",
-    confetti:["#ff3c41","#00b3e6","#ffffff","#ffd23c","#00c389","#7a5cff"],
+    confetti:["#4a7c3c","#f4c20d","#ef8d2d","#2f8fbf","#8b5a2b","#fbf3e1"],
     praise:["Player 1 wins!","Nice combo!","Level up!","BANANAS! 🍌","New high score!","Mighty!"],
     nudge:["Try again!","So close!","One more go!","Almost — retry!"]}
 };
