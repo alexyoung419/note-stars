@@ -115,9 +115,12 @@
   body[data-theme="gorilla"] .buddy.oops{animation:gorillaOops .65s ease;}
   body[data-theme="gorilla"] .buddy.oops .gfist-r{animation:gThrowArm .55s ease-out; transform-origin:86px 70px;}
   .thrown{position:fixed; font-size:30px; line-height:1; pointer-events:none; z-index:17;
-    animation:throwFly .62s cubic-bezier(.25,.6,.4,1) forwards;}
-  @keyframes throwFly{0%{transform:translate(0,0) scale(.65) rotate(0deg); opacity:1;}
-    100%{transform:translate(var(--dx,0px),var(--dy,55vh)) scale(2.5) rotate(420deg); opacity:0;}}
+    animation:throwFly .6s cubic-bezier(.3,.55,.4,1) forwards;}
+  @keyframes throwFly{
+    0%{transform:translate(0,0) scale(.6) rotate(0deg); opacity:1;}
+    60%{transform:translate(calc(var(--dx,0px)*.78),calc(var(--dy,40vh)*.78)) scale(2.8) rotate(260deg); opacity:1;}
+    88%{transform:translate(var(--dx,0px),var(--dy,46vh)) scale(6.4) rotate(320deg); opacity:1;}
+    100%{transform:translate(var(--dx,0px),var(--dy,46vh)) scale(7.4) rotate(330deg); opacity:0;}}
   .bubble{position:relative; background:var(--bubbleBg); color:var(--bubbleInk); border-radius:18px; padding:8px 14px; font-weight:bold; font-size:clamp(15px,3.6vw,21px);
     box-shadow:0 8px 0 rgba(0,0,0,.1); min-width:90px; text-align:center; min-height:20px;}
   .bubble:after{content:""; position:absolute; left:24px; bottom:-12px; border:8px solid transparent; border-top-color:var(--bubbleBg); border-bottom:0;}
@@ -661,12 +664,14 @@ function onBlack(midi,el){ if(state.locked) return; audioOn(); el.classList.add(
 function bump(id){ const el=document.getElementById(id); el.classList.add("pop"); setTimeout(()=>el.classList.remove("pop"),420); }
 function throwAtPlayer(){
   const r=buddy.getBoundingClientRect();
+  const startX=r.left+r.width*0.74, startY=r.top+r.height*0.6;
   const span=document.createElement("span"); span.className="thrown";
-  span.textContent=Math.random()<0.5?"🍌":"🛢️";
-  span.style.left=(r.left+r.width*0.74)+"px";
-  span.style.top=(r.top+r.height*0.6)+"px";
-  span.style.setProperty("--dx",Math.round((Math.random()-0.5)*180)+"px");
-  span.style.setProperty("--dy",Math.round(innerHeight*0.55)+"px");
+  span.textContent="🍌";
+  span.style.left=startX+"px";
+  span.style.top=startY+"px";
+  // aim toward the viewer's face (screen center) so it grows as it "hits"
+  span.style.setProperty("--dx",Math.round((innerWidth*0.5-startX)+(Math.random()-0.5)*90)+"px");
+  span.style.setProperty("--dy",Math.round(innerHeight*0.55-startY)+"px");
   document.body.appendChild(span);
   span.addEventListener("animationend",()=>span.remove());
 }
