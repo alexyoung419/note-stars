@@ -9,6 +9,11 @@
 <meta name="apple-mobile-web-app-title" content="Note Stars">
 <title>Note Stars</title>
 <style>
+  @font-face {
+    font-family: 'ClefGlyphs';
+    src: url(data:font/woff2;base64,d09GMgABAAAAAAQIAA0AAAAABrgAAAO4AAIAxQAAAAAAAAAAAAAAAAAAAAAAAAAAGyAcQgZgADwRCAqEPIQRATYCJAMMCwgABCAFg2YHIBuiBVGULkoc4OeBYyw9wZFpwaKOxhCbmtDm0oM4XsuNa+On6Gs8/Lf2u/NG9mMSTfNPePSK56QhcjolEaKXzg6fp/86iKkYlpyADNJpn9YZBAG2u//XbOpr2VQTmsJmM1+CKqn5m6wFAThxTf0HjPJv5RfJdQJVUJU9Dft8YvMoaoo0GQ9Qp9sQ5S+gR3ZzakFnSxi1IAxlPIlNBQ4K9D2AoY7p2E1jrZ1NtQDZytqwTu5NZTXkWdRST5bW5pJ2EUDzSxymRyXuuANc9tlpgYUBiLZGqSXCmwmk/NM5IQKc7MVFa91/E9BKnEOC6KNihQMCBfOsjTLkArIDJEN6l0YESGRdI832IOnvTYEMGjp8kDpA4V3zL5MH1R51celefZ8y+CB8xYMTztNp2+6Bu3dj0xZsWLDeewpSF6UtWrbIEHGaug823xm5t8BNJ6dtSvEDyuDqsOWr/fYOa/oby3jwIGPDLJvM21fNR722Aauy1h7dCXYx5/nOAz77b6eL3pGm2/Pv3XOePsBme0j+bqeMApxQ1aKpvYy9J8E8RNh/wYIf67GM1ilf+4NthVO33hW5qe3Tm8DGZt7M3VvS9D/Oew31rmeFBHZJ3n2Ba3nrFcBNjfYukUcwZyK7RbQND1FbdYFJRhrj4rviQ3T+PXnJgZ4YEp/Mx4kEltAkRBJQXiyP4ctxmi8zx2VZPDsWLFgTFChKT0IT0Jw1BdmceE58x3BGag2ug1NCU2mMrOCAK7RI7ywYOqO9ve7b+eXAufCVc8/srGczT9EsHD4t4X1/yPzmvNq9WXoj2WqK9hkve1nEHeLzLVFcEUC71tVEmP9FdfBGDUp6thGHvSoidtz2d/zejT4uOmXP+sNk7OGiZjWq1Oc04ObYdr2lKaqASN9qSqhKXlHQpmg94//fP/+bev/7fa3p6t83nHNk+t4ucFd9dZiyfqEGPvfra/h+jzj1d/yvspZWB2jCU7uunnohgGcDUIhfyvFOfrxgmDIMBdmfVVo2eFvmaOdBq2lG8EhlknkLmTDpjcl2HWaKDZ+Y6ir4fb5ZCwcjUoNOTapUqNQCgkFgMJBUlcpA4pFakCCJmpCqlSnBz9Zr1aISqUkzCCfOrBYNminAYBWqUItaFRMpQaoDq4/67XKkei2aweq0alalBDerK85yj2RlKrSqVaQJRgSBwClFSJAggtK3uegIqXN0Pagm05Vpsk+S6kH5bNAZk+WKtH7RSlWnsDp/fhuUiGwGCaGUkFjpuMW4u/NZE2L9qyEA) format('woff2');
+    font-display: block;
+  }
   /* ---- base palette (FOXY default) ---- */
   :root{
     --c-C:#FF5A5F; --c-D:#FF9F40; --c-E:#F4C20D; --c-F:#5BC46B;
@@ -528,8 +533,8 @@ function renderStaff(n){
   if(y>BOTTOM) for(let ly=BOTTOM+GAP; ly<=y+1; ly+=GAP) ledgers+='<line x1="'+lx1+'" y1="'+ly+'" x2="'+lx2+'" y2="'+ly+'" stroke="#2b2350" stroke-width="3" stroke-linecap="round"/>';
   let lines=""; for(let i=0;i<5;i++){ const ly=TOP+i*GAP; lines+='<line x1="20" y1="'+ly+'" x2="300" y2="'+ly+'" stroke="#bcb4d6" stroke-width="3" stroke-linecap="round"/>'; }
   let clef = n.clef==="treble"
-    ? '<text x="34" y="'+(BOTTOM-50)+'" font-size="150" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
-    : '<text x="38" y="'+(BOTTOM-9.5)+'" font-size="100" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
+    ? '<text x="34" y="'+(BOTTOM-50)+'" font-size="150" fill="#2b2350" font-family="ClefGlyphs,Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
+    : '<text x="38" y="'+(BOTTOM-9.5)+'" font-size="100" fill="#2b2350" font-family="ClefGlyphs,Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
   const headColor = state.colorHint? COLOR[n.letter] : "#2b2350";
   const head='<g transform="rotate(-18 '+NOTEX+' '+y+')"><ellipse cx="'+NOTEX+'" cy="'+y+'" rx="16" ry="12.5" fill="'+headColor+'" stroke="#2b2350" stroke-width="2.5"/></g>';
   staffSVG.innerHTML=lines+ledgers+clef+head;
@@ -546,8 +551,8 @@ function miniStaffSVG(clef){
   const loY=nY(lo.letter,lo.oct), hiY=nY(hi.letter,hi.oct);
   let lines=""; for(let i=0;i<5;i++){ const ly=T2+i*G2; lines+='<line x1="14" y1="'+ly+'" x2="186" y2="'+ly+'" stroke="#cfc8e2" stroke-width="1.6" stroke-linecap="round"/>'; }
   const clefG = clef==="treble"
-    ? '<text x="18" y="'+(B2-9)+'" font-size="66" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
-    : '<text x="20" y="'+(T2+G2*3)+'" font-size="44" fill="#2b2350" font-family="Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
+    ? '<text x="18" y="'+(B2-9)+'" font-size="66" fill="#2b2350" font-family="ClefGlyphs,Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D11E}</text>'
+    : '<text x="20" y="'+(T2+G2*3)+'" font-size="44" fill="#2b2350" font-family="ClefGlyphs,Bravura,\'Noto Music\',\'Times New Roman\',serif">\u{1D122}</text>';
   const bandTop=Math.min(loY,hiY)-8, bandBot=Math.max(loY,hiY)+8;
   const band='<rect x="'+bx1+'" y="'+bandTop+'" width="'+(bx2-bx1)+'" height="'+(bandBot-bandTop)+'" rx="8" fill="var(--accentB)" opacity=".16"/>';
   function ledg(y,x){ let s=""; const a=x-9,b=x+9;
